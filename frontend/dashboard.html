@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SecureBank</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1><a href="index.html">🏦 SecureBank</a></h1>
+            </div>
+            <nav class="nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="transfer.html">Transfer</a>
+                <a href="history.html">History</a>
+                <a href="#" id="logoutBtn">Logout</a>
+            </nav>
+            <div class="user-info">
+                <span id="welcomeUser"></span>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="dashboard">
+                <h2>Account Dashboard</h2>
+                
+                <!-- Account Overview -->
+                <section class="account-overview">
+                    <h3>Your Accounts</h3>
+                    <div id="accountsList" class="accounts-grid">
+                        <!-- Accounts will be loaded here -->
+                    </div>
+                    <button id="createAccountBtn" class="btn btn-secondary">Create New Account</button>
+                </section>
+
+                <!-- Quick Actions -->
+                <section class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="actions-grid">
+                        <a href="transfer.html" class="action-card">
+                            <div class="action-icon">💸</div>
+                            <h4>Transfer Money</h4>
+                            <p>Send money to another account</p>
+                        </a>
+                        <a href="history.html" class="action-card">
+                            <div class="action-icon">📊</div>
+                            <h4>View History</h4>
+                            <p>Check your transaction history</p>
+                        </a>
+                        <a href="#" class="action-card" id="balanceCheck">
+                            <div class="action-icon">💰</div>
+                            <h4>Check Balance</h4>
+                            <p>View current account balances</p>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Recent Transactions -->
+                <section class="recent-transactions">
+                    <h3>Recent Transactions</h3>
+                    <div id="recentTransactions" class="transactions-list">
+                        <!-- Recent transactions will be loaded here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Create Account Modal -->
+            <div id="createAccountModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3>Create New Account</h3>
+                    <form id="createAccountForm">
+                        <div class="form-group">
+                            <label for="accountType">Account Type</label>
+                            <select id="accountType" required>
+                                <option value="savings">Savings Account</option>
+                                <option value="checking">Checking Account</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="initialDeposit">Initial Deposit</label>
+                            <input type="number" id="initialDeposit" min="100" step="0.01" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                        <div id="createAccountMessage" class="message"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

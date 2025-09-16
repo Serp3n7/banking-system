@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Money - SecureBank</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1><a href="index.html">🏦 SecureBank</a></h1>
+            </div>
+            <nav class="nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="transfer.html">Transfer</a>
+                <a href="history.html">History</a>
+                <a href="#" id="logoutBtn">Logout</a>
+            </nav>
+        </header>
+
+        <main class="main">
+            <div class="transfer-container">
+                <h2>Transfer Money</h2>
+                
+                <form id="transferForm" class="transfer-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromAccount">From Account</label>
+                            <select id="fromAccount" required>
+                                <option value="">Select account...</option>
+                            </select>
+                        </div>
+                        <div class="balance-display">
+                            <span>Available Balance: </span>
+                            <span id="availableBalance">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="toAccountNumber">To Account Number</label>
+                        <input type="text" id="toAccountNumber" placeholder="Enter recipient account number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" min="0.01" step="0.01" placeholder="0.00" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description (Optional)</label>
+                        <input type="text" id="description" placeholder="Payment description">
+                    </div>
+
+                    <div class="transfer-summary">
+                        <h4>Transfer Summary</h4>
+                        <div class="summary-row">
+                            <span>Amount:</span>
+                            <span id="summaryAmount">$0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Transfer Fee:</span>
+                            <span>$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="summaryTotal">$0.00</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Transfer Money</button>
+                    <div id="transferMessage" class="message"></div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
