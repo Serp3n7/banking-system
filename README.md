@@ -1,328 +1,75 @@
-# 🏦 Advanced Banking System
+# Advanced Banking System
 
-A complete full-stack banking web application built with modern technologies for secure financial transactions and account management.
+A full-stack banking application with C++ backend, MongoDB database, and HTML/CSS/JS frontend.
 
-## 🚀 Features
+## Features
 
-### Core Banking Features
-- **User Authentication & Registration** - Secure login system with password hashing
-- **Multi-Account Management** - Support for Savings and Checking accounts
-- **Money Transfers** - Secure transfer between accounts with real-time validation
-- **Transaction History** - Complete transaction tracking with filtering options
-- **Balance Management** - Real-time balance updates and checking
-- **Account Creation** - Dynamic account creation with initial deposit
+- User authentication and registration
+- Account management (multiple account types)
+- Money transfers between accounts
+- Transaction history and reporting
+- Responsive web interface
+- Bank-level security
 
-### Security Features
-- **Password Hashing** - SHA-256 encryption for password security
-- **Token-Based Authentication** - JWT-like tokens for session management
-- **Input Validation** - Server-side and client-side validation
-- **SQL Injection Protection** - Parameterized queries and input sanitization
-- **CORS Protection** - Cross-origin request security
+## Technology Stack
 
-### User Experience
-- **Responsive Design** - Works seamlessly on all devices
-- **Modern UI/UX** - Clean, professional interface with animations
-- **Real-time Updates** - Live balance and transaction updates
-- **Form Validation** - Comprehensive client-side validation
-- **Error Handling** - Graceful error messages and recovery
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Backend**: C++ with Crow framework
+- **Database**: MongoDB with C++ driver
+- **Security**: OpenSSL for encryption, JWT tokens
 
-## 🛠️ Technology Stack
+## Setup Instructions
 
-### Backend
-- **C++17** - Modern C++ with advanced features
-- **Crow Framework** - Lightweight HTTP web framework
-- **MongoDB C++ Driver** - Native database connectivity
-- **OpenSSL** - Cryptographic library for security
+1. Run the setup script: `bash setup-fixed.sh`
+2. Build the backend: `cd backend && mkdir -p build && cd build && cmake .. && make`
+3. Initialize the database: `mongo < ../../database/init.js`
+4. Start the server: `./banking_server`
+5. Open frontend: `cd ../../../frontend && python3 -m http.server 3000`
+6. Access the application at: http://localhost:3000
 
-### Frontend
-- **HTML5** - Modern markup with semantic elements
-- **CSS3** - Advanced styling with Grid and Flexbox
-- **JavaScript ES6+** - Modern JavaScript features
-- **Responsive Design** - Mobile-first approach
+## Troubleshooting
 
-### Database
-- **MongoDB** - NoSQL database for flexible data storage
-- **Indexes** - Optimized database performance
-- **Data Validation** - Schema validation and constraints
+### MongoDB Issues
+- Check if MongoDB is running: `sudo systemctl status mongod`
+- View MongoDB logs: `sudo journalctl -u mongod`
+- Restart MongoDB: `sudo systemctl restart mongod`
 
-## 📁 Project Structure
+### Build Issues
+- Make sure all dependencies are installed
+- Try cleaning build directory: `rm -rf build && mkdir build && cd build`
+- Check CMake output for missing dependencies
 
-```
-banking-system/
-├── backend/
-│   ├── src/
-│   │   ├── main.cpp          # Application entry point
-│   │   ├── database.cpp      # Database operations
-│   │   ├── auth.cpp          # Authentication logic
-│   │   ├── routes.cpp        # API route handlers
-│   │   └── utils.cpp         # Utility functions
-│   ├── include/
-│   │   ├── database.h        # Database class definitions
-│   │   ├── auth.h           # Authentication headers
-│   │   ├── routes.h         # Route handler headers
-│   │   └── utils.h          # Utility headers
-│   └── CMakeLists.txt       # Build configuration
-├── frontend/
-│   ├── index.html           # Landing page
-│   ├── login.html           # Authentication page
-│   ├── dashboard.html       # Main dashboard
-│   ├── transfer.html        # Money transfer page
-│   ├── history.html         # Transaction history
-│   ├── css/
-│   │   └── styles.css       # Complete styling
-│   └── js/
-│       ├── api.js           # API communication
-│       ├── auth.js          # Authentication logic
-│       └── app.js           # Main application logic
-├── database/
-│   └── init.js              # Database initialization
-├── setup.sh                 # Automated setup script
-└── README.md               # Project documentation
-```
-
-## 🚀 Quick Start
-
-### 1. System Requirements
-- Ubuntu 20.04+ (WSL supported)
-- MongoDB 6.0+
-- CMake 3.10+
-- GCC with C++17 support
-
-### 2. Automated Setup
+### Crow Framework Issues
+If Crow is not found, install manually:
 ```bash
-# Make setup script executable
-chmod +x setup.sh
-
-# Run automated setup
-./setup.sh
-```
-
-### 3. Manual Setup (Alternative)
-
-#### Install Dependencies
-```bash
-# Update system
-sudo apt update && sudo apt upgrade -y
-
-# Install build tools
-sudo apt install -y build-essential cmake pkg-config
-
-# Install MongoDB
-sudo apt install -y mongodb-org
-
-# Install C++ MongoDB driver
-sudo apt install -y libmongocxx-dev libbsoncxx-dev
-
-# Install Crow framework
-sudo apt install -y libcrow-dev
-
-# Install OpenSSL
-sudo apt install -y libssl-dev
-```
-
-#### Build Backend
-```bash
-cd backend
+cd /tmp
+git clone https://github.com/CrowCpp/Crow.git
+cd Crow
 mkdir build && cd build
-cmake ..
-make
+cmake .. -DCROW_BUILD_EXAMPLES=OFF
+make -j$(nproc)
+sudo make install
+sudo ldconfig
 ```
 
-#### Initialize Database
-```bash
-# Start MongoDB
-sudo systemctl start mongod
+## API Endpoints
 
-# Initialize database schema
-mongo < ../database/init.js
-```
-
-### 4. Run Application
-```bash
-# Start the C++ server (from backend/build/)
-./banking_server
-
-# Serve frontend (new terminal)
-cd frontend
-python3 -m http.server 3000
-
-# Access application
-# Open: http://localhost:3000
-```
-
-## 📊 API Documentation
-
-### Authentication Endpoints
-- `POST /api/register` - Create new user account
-- `POST /api/login` - User authentication
-
-### Account Management
-- `GET /api/accounts` - Retrieve user accounts
-- `POST /api/accounts` - Create new bank account
+- `POST /api/login` - User login
+- `POST /api/register` - User registration
+- `GET /api/accounts` - Get user accounts
+- `POST /api/accounts` - Create new account
 - `GET /api/balance/:id` - Get account balance
-
-### Transactions
-- `POST /api/transfer` - Transfer money between accounts
+- `POST /api/transfer` - Transfer money
 - `GET /api/transactions/:id` - Get transaction history
 
-### Request/Response Format
-```json
-// Login Request
-{
-    "username": "testuser",
-    "password": "password123"
-}
+## Security Features
 
-// Login Response
-{
-    "success": true,
-    "token": "auth_token_here",
-    "user_id": "user_id_here",
-    "username": "testuser"
-}
+- Password hashing with SHA-256
+- JWT token-based authentication
+- Input validation and sanitization
+- CORS protection
+- SQL injection prevention
 
-// Transfer Request
-{
-    "from_account": "account_id",
-    "to_account_number": "ACC1234567890",
-    "amount": 100.50,
-    "description": "Payment description"
-}
-```
+## License
 
-## 🔒 Security Implementation
-
-### Password Security
-- SHA-256 hashing algorithm
-- No plaintext password storage
-- Secure password verification
-
-### Authentication
-- Token-based session management
-- 24-hour token expiration
-- Automatic token cleanup
-
-### Input Validation
-- Server-side validation for all inputs
-- Email format validation
-- Amount range validation
-- Account number verification
-
-### Database Security
-- Parameterized queries prevent injection
-- Unique constraints on critical fields
-- Indexed fields for performance
-
-## 🎨 UI/UX Features
-
-### Visual Design
-- Modern gradient backgrounds
-- Card-based layout system
-- Consistent color scheme
-- Professional typography
-
-### Interactions
-- Smooth hover animations
-- Form validation feedback
-- Loading states
-- Success/error messages
-
-### Responsive Design
-- Mobile-first approach
-- Flexible grid layouts
-- Scalable components
-- Touch-friendly interface
-
-## 🧪 Testing
-
-### Default Test Account
-```
-Username: testuser
-Password: password
-```
-
-### Test Scenarios
-1. **User Registration** - Create new account with validation
-2. **Login Process** - Authentication with error handling
-3. **Account Creation** - Multiple account types with initial deposit
-4. **Money Transfer** - Between accounts with balance verification
-5. **Transaction History** - View and filter transaction records
-
-## 🚀 Deployment Options
-
-### Local Development
-- Use provided setup scripts
-- Python HTTP server for frontend
-- Local MongoDB instance
-
-### Production Deployment
-- Docker containerization
-- Nginx reverse proxy
-- SSL/TLS certificates
-- MongoDB Atlas cloud database
-
-## 🔧 Customization
-
-### Adding Features
-- Extend API endpoints in `routes.cpp`
-- Add frontend pages and JavaScript modules
-- Update database schemas in `database.cpp`
-
-### Styling Changes
-- Modify `styles.css` for visual updates
-- Update color scheme variables
-- Customize responsive breakpoints
-
-### Security Enhancements
-- Implement rate limiting
-- Add two-factor authentication
-- Enhanced password policies
-- Audit logging
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🎯 Future Enhancements
-
-### Planned Features
-- [ ] Account statements generation
-- [ ] Email notifications
-- [ ] Mobile application
-- [ ] Loan management system
-- [ ] Investment portfolio tracking
-- [ ] Multi-currency support
-- [ ] Admin dashboard
-- [ ] Advanced reporting
-- [ ] API rate limiting
-- [ ] Two-factor authentication
-
-### Technical Improvements
-- [ ] Docker containerization
-- [ ] Automated testing suite
-- [ ] CI/CD pipeline
-- [ ] Performance monitoring
-- [ ] Database backup system
-- [ ] Load balancing
-- [ ] Microservices architecture
-
-## 📞 Support
-
-For questions, issues, or contributions:
-- Create GitHub Issues for bugs
-- Submit Pull Requests for features
-- Review documentation for setup help
-
----
-
-**Made with ❤️ for educational purposes**
-
-This project demonstrates modern full-stack development practices with a focus on security, performance, and user experience.
+MIT License - see LICENSE file for details
